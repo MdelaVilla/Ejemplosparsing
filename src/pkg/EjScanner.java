@@ -7,6 +7,9 @@ package pkg;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.common.SolrInputDocument;
@@ -17,6 +20,10 @@ public class EjScanner {
         Scanner scan = new Scanner(new File(fileName));
         String state="BEFORE";
         String index = null,title=null,author=null,text=null;
+        
+        //Borremos colección
+        DeletingAllDocuments();
+        
         while(scan.hasNextLine()){
             state="PROCESS";
             String line = scan.nextLine();
@@ -68,4 +75,28 @@ public class EjScanner {
 		solr.add(doc);
 		solr.commit();
     }
+    
+    public static void DeletingAllDocuments () { 
+   
+      //Preparing the Solr client 
+      String urlString = "http://localhost:8983/solr/micoleccion"; 
+      SolrClient Solr = new HttpSolrClient.Builder(urlString).build();   
+      
+      //Preparing the Solr document 
+      SolrInputDocument doc = new SolrInputDocument();   
+          
+        try {
+            //Deleting the documents from Solr
+            Solr.deleteByQuery("*");
+            Solr.commit(); 
+        } catch (SolrServerException ex) {
+            Logger.getLogger(EjScanner.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EjScanner.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+      //Saving the document 
+      
+      System.out.println("Documents deleted"); 
+   } 
 }
