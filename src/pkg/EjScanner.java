@@ -16,7 +16,8 @@ import org.apache.solr.common.SolrInputDocument;
 
 public class EjScanner {
     public static void main(String [] args) throws IOException, SolrServerException {
-        String fileName = ".\\collection\\CISI.ALL.extract";
+        String sCarpAct = System.getProperty("user.dir");
+        String fileName = sCarpAct+"\\src\\corpus\\CISI.ALL.extract";
         Scanner scan = new Scanner(new File(fileName));
         String state="BEFORE";
         String index = null,title=null,author=null,text=null;

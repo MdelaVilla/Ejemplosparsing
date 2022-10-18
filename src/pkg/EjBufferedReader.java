@@ -15,8 +15,9 @@ import java.io.IOException;
  */
 public class EjBufferedReader {
 public static void main(String[] args) {
-        String file = ".\\collection\\CISI.ALL.extract";
-        try(BufferedReader br = new BufferedReader(new FileReader(file))) 
+        String sCarpAct = System.getProperty("user.dir");
+        String fileName = sCarpAct+"\\src\\corpus\\CISI.ALL.extract";
+        try(BufferedReader br = new BufferedReader(new FileReader(fileName))) 
         {
             String line;
             while ((line = br.readLine()) != null) {

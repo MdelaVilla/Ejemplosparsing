@@ -16,7 +16,8 @@ import java.util.stream.Stream;
  */
 public class EjStream {
 public static void main(String[] args) {
-        String fileName = ".\\collection\\CISI.ALL.extract";
+        String sCarpAct = System.getProperty("user.dir");
+        String fileName = sCarpAct+"\\src\\corpus\\CISI.ALL.extract";
         try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
             stream.forEach(System.out::println);
         }
